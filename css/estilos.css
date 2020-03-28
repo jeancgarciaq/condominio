@@ -1,0 +1,80 @@
+body 
+{
+	background-color: #F9FBFC;
+}
+#header
+{ 
+	padding: 10px;
+	margin: 40px 10px 10px 40px; 
+}
+#menu
+{
+	margin: 40px 10px 10px 40px;
+	padding:10px;
+}
+
+h1, h2, h3 
+{
+	text-align: center;
+	margin: 40px 5px 5px 40px;
+	padding: 5px;
+}
+
+.fuente
+{
+	text-align: center;
+}
+
+.icono
+{
+	color: black;
+	font-weight: bold;
+}
+
+.pestana
+{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#iconoM1
+{
+	width: 10%;
+	height: 35%;
+}
+
+#iconoM2
+{
+	width: 10%;
+	height: 10%;
+}
+
+#iconoM3
+{
+	width: 10%;
+	height: 10%;
+}
+
+#iconoM4
+{
+	width: 10%;
+	height: 10%;
+}
+
+#iconoM5
+{
+	width: 10%;
+	height: 10%;
+}
+
+#iconoM6
+{
+	width: 10%;
+	height: 10%;
+}
+
+
+label 
+{
+	font-weight: bold;
+}

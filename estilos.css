@@ -1,0 +1,28 @@
+body 
+{
+	background-color: #F9FBFC;
+}
+
+header
+{ 
+	padding: 10px;
+	margin: 40px 10px 10px 40px; 
+}
+
+#menu
+{
+	margin: 40px 10px 10px 40px;
+	padding:10px;
+}
+
+h1 
+{
+	text-align: center;
+	margin: 40px 5px 5px 40px;
+	padding: 5px;
+}
+
+.fuente
+{
+	text-align: center;
+}
