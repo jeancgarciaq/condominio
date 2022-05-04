@@ -1,7 +1,7 @@
 <?php  
 
 //Conexión a la base de datos
-include ('../conexion.php');
+require_once '../conexion.php';
 
 //Datos de prueba
 //nombre

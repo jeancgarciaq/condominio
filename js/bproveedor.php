@@ -15,7 +15,8 @@
 			<h1><img src="../img/obrero.png" class="img-fluid" width="5%" height="10%"> MÓDULO 3: PROVEEDORES</h1>
 		</header><!-- /header -->
 <?php  
-	include('../conexion.php');
+//Conexion a la base de datos
+require_once '../conexion.php';
 
 //Reciben la búsqueda
 $buscar = $_POST['proveedor']; 

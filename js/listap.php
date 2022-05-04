@@ -1,5 +1,6 @@
 <?php 
-include '../conexion.php';
+//Conexion a la base de datos
+require_once '../conexion.php';
 
 $condominio=$_POST['condominio'];
 
@@ -11,7 +12,7 @@ $condominio=$_POST['condominio'];
 	$result=$conexion->query($sql);
 
 	$cadena="<label for='proveedor'><i class='la la-signature'></i> Nombre</label> 
-			<select class='form-control'  id='lista2' name='proveedor'>
+			<select class='form-select'  id='lista2' name='proveedor'>
 				<option value='' selected>Seleccione:</option>
 				<option value='todos'>Todos</option>
 			";

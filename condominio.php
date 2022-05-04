@@ -9,57 +9,58 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/estilos.css">
 	<link href="css/line-awesome.min.css" rel="stylesheet">
-	<script
-	src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
+	<script	src="js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<div class="container-fluid">
-	<ul class="nav justify-content-center bg-primary">
-	  <li class="nav-item">
-	    <a class="nav-link active text-light border-left" href="index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="propietarios.php"><i class="las la-user-alt"></i> Propietarios</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="pagos.php"><i class="las la-donate"></i> Pagos</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="avisos.php"><i class="las la-receipt"></i> Avisos</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left border-right" href="cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
-	  </li>
-	</ul>
+<!--INICIO BARRA NAVEGACIÓN -->
+  <ul class="nav justify-content-center bg-primary">
+    <li class="nav-item">
+      <a class="nav-link active text-light border-start border-white" href="index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="condominio.php"><i class="las la-city"></i> Condominio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="propietarios.php"><i class="las la-user-alt"></i> Propietarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="pagos.php"><i class="las la-donate"></i> Pagos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="avisos.php"><i class="las la-receipt"></i> Avisos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white border-end" href="cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
+    </li>
+  </ul>
+  <!--FIN BARRA NAVEGACIÓN -->
 	<h1><img src="img/pueblo.png" class="img-fluid" id="iconoM1"> <!--width="50px" height="70px"--> MÓDULO 1: CONDOMINIOS</h1>
 	<p class="fuente">En este módulo puede añadir, modificar, borrar o consultar los condominios registrados actualmente.</p>
 	
 	<!-- Empieza las pestañas -->
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" id="editar-tab" data-toggle="tab" href="#editar" role="tab" aria-controls="editar" aria-selected="true"><i class="las la-plus"></i> <span class="pestana">Agregar</span></a>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="editar-tab" data-bs-toggle="tab" href="#editar" role="tab" aria-controls="editar" aria-selected="true"><i class="las la-plus"></i> <span class="pestana">Agregar</span></a>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="modificar-tab" data-toggle="tab" href="#modificar" role="tab" aria-controls="modificar" aria-selected="false"><i class="la la-pen"></i> <span class="pestana">Modificar</span></a>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="modificar-tab" data-bs-toggle="tab" href="#modificar" role="tab" aria-controls="modificar" aria-selected="false"><i class="la la-pen"></i> <span class="pestana">Modificar</span></a>
 		</li>
 		<!-- Inicio Pestaña Borrar
 		<li class="nav-item">
 			<a class="nav-link" id="borrar-tab" data-toggle="tab" href="#borrar" role="tab" aria-controls="borrar" aria-selected="false"><i class="las la-eraser"></i> <span class="pestana">Borrar</span></a>
 		</li>
 		Fin Pestaña Borrar -->
-		<li class="nav-item">
-			<a class="nav-link" id="buscar-tab" data-toggle="tab" href="#buscar" role="tab" aria-controls="buscar" aria-selected="false"><i class="la la-search"></i> <span class="pestana">Buscar</span></a>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="buscar-tab" data-bs-toggle="tab" href="#buscar" role="tab" aria-controls="buscar" aria-selected="false"><i class="la la-search"></i> <span class="pestana">Buscar</span></a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -69,77 +70,77 @@
   		<section class="row">
   			<article class="col-2"></article>
   			<article class="col-8 mt-4 mb-4">
-  				<form accept-charset="utf-8" action="js/agregarcondominio.php" method="POST" class="container-fluid">
-						<div class="form-row">
-							<div class="col form-group">
+  				<form accept-charset="utf-8" action="js/agregarcondominio.php" method="POST">
+  					<div class="row input-group">
+							<div class="col">
 								<label><i class="las la-city"></i> Condominio: <br> 
 								<input class="form-control"  type="text" name="condominio" data-toggle="tooltip" data-placement="bottom" title="Escriba el nombre del Condominio" placeholder="Condominio XXXX" required></label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="la la-signature"></i> Responsable: <br> 	
 								<input class="form-control" type="text" name="nombre" required data-toggle="tooltip" data-placement="bottom" title="Coloque el nombre de la persona de contacto del Condominio" placeholder="Nombre Apellido" required></label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-address-card"></i> Cargo:<br> <input class="form-control" type="text" name="cargo" data-toggle="tooltip" data-placement="bottom" title="Coloque el cargo que ocupa la persona de contacto del Condominio" placeholder="Presidente, Secretario, Administrador, etc." required></label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-envelope"></i> Correo:<br> <input class="form-control"  type="email" name="correo" data-toggle="tooltip" data-placement="bottom" title="Coloque el correo del Condominio"  placeholder="condominio@correo.com" required></label>
 							</div>
 						</div>
-						<div class="form-row mt-4">
-							<div class="col form-group">
-								<label><i class="las la-barcode"></i> RIF:<br> <input class="form-control"  type="text" name="rif"data-toggle="tooltip" data-placement="bottom" title="Indique el número de RIF del Condominio"placeholder="J-12345678-9" required> </label>	
+						<div class="row mt-4 input-group">
+							<div class="col">
+								<label><i class="las la-barcode"></i> RIF:<br> <input class="form-control"  type="text" name="rif"data-toggle="tooltip" data-placement="bottom" title="Indique el número de RIF del Condominio"placeholder="J-12345678-9" required> </label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-phone"></i> Teléfono:<br> <input class="form-control" type="tel" name="telefono" pattern="[+][0-9]{2}[-][0-9]{4}[-][0-9]{7}" data-toggle="tooltip" data-placement="bottom" title="Coloque el signo '+' seguido del código de país, un guión con el código de la región, un guión y el número de teléfono" placeholder="+01-0123-1234567" required></label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-directions"></i> Dirección:<br> <textarea class="form-control"  name="direccion" data-toggle="tooltip" data-placement="bottom" title="Indique la dirección del Condominio lo más exacta posible" placeholder="Av o calle, Conjunto, etc." required></textarea></label>
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-map-marker"></i> Ciudad:<br> <input class="form-control"  type="text" name="ciudad" data-toggle="tooltip" data-placement="bottom" title="Indique la Ciudad o Población del Condominio" placeholder="Población o Ciudad" required></label>	
 							</div>
 						</div>
-						<div class="form-row mt-4">
-							<div class="col form-group">
+						<div class="row mt-2 input-group">
+							<div class="col">
 								<label><i class="las la-location-arrow"></i> Estado:<br>
-					      <select name="estado" class="form-control" data-toggle="tooltip" data-placement="bottom" title="Seleccione un Estado" required>
-					        <option selected>Carabobo</option>
-					        <option>Amazonas</option>
-					        <option>Anzoátegui</option>
-					        <option>Apure</option>
-					        <option>Aragua</option>
-					        <option>Barinas</option>
-					        <option>Bolívar</option>
-					        <option>Cojedes</option>
-					        <option>Delta Amacuro</option>
-					        <option>Distrito Capital</option>
-					        <option>Falcón</option>
-					        <option>Guárico</option>
-					        <option>Lara</option>
-					        <option>Mérida</option>
-					        <option>Miranda</option>
-					        <option>Monagas</option>
-					        <option>Nueva Esparta</option>
-					        <option>Portuguesa</option>
-					        <option>Sucre</option>
-					        <option>Táchira</option>
-					        <option>Trujillo</option>
-					        <option>Vargas</option>
-					        <option>Yaracuy</option>
-					        <option>Zulia</option>
-					      </select></label>	
+						     <select name="estado" class="form-select" data-toggle="tooltip" data-placement="bottom" title="Seleccione un Estado" required>
+						      <option selected>Carabobo</option>
+						      <option>Amazonas</option>
+						      <option>Anzoátegui</option>
+						      <option>Apure</option>
+						      <option>Aragua</option>
+						      <option>Barinas</option>
+						      <option>Bolívar</option>
+						      <option>Cojedes</option>
+						      <option>Delta Amacuro</option>
+						      <option>Distrito Capital</option>
+						      <option>Falcón</option>
+						      <option>Guárico</option>
+						      <option>Lara</option>
+						      <option>Mérida</option>
+						      <option>Miranda</option>
+						      <option>Monagas</option>
+						      <option>Nueva Esparta</option>
+						      <option>Portuguesa</option>
+						      <option>Sucre</option>
+						      <option>Táchira</option>
+						      <option>Trujillo</option>
+						      <option>Vargas</option>
+						      <option>Yaracuy</option>
+						      <option>Zulia</option>
+						    </select></label>	
 							</div>
-							<div class="col form-group">
+							<div class="col">
 								<label><i class="las la-map"></i> Mapa:<br> <textarea class="form-control"  name="mapa"  data-toggle="tooltip" data-placement="bottom" title="Copie y pegue el html de Google Maps" placeholder="Html de Google Maps" required></textarea></label>	
 							</div>
-							<div class="col form-group">
-	  						<button  type="submit" class="btn btn-lg btn-success form-control"><i class="las la-plus"></i> Agregar</button>
-	  					</div>
-	  					<div class="col form-group">
-	  						<button type="reset" class="btn btn-lg btn-danger form-control"><i class="las la-eraser"></i> Reiniciar</button>		
-	  					</div>
-						</div>
+							<div class="col p-4">
+		  					<button  type="submit" class="btn btn-lg btn-success form-control"><i class="las la-plus"></i> Agregar</button>
+		  				</div>
+		  				<div class="col p-4">
+		  					<button type="reset" class="btn btn-lg btn-danger form-control"><i class="las la-eraser"></i> Reiniciar</button>		
+		  				</div>
+		  			</div>
   				</form>
   			</article>
   			<article class="col-2"></article>
@@ -208,9 +209,9 @@
 		                <select class="form-control" name="condominio" required>
 											<option value="0">Seleccione:</option>
 											<?php
-											  $query = $conexion -> query ("SELECT Nombre FROM condominios");
+											  $query = $conexion-> query ("SELECT * FROM condominios");
 											  while ($valores = mysqli_fetch_array($query)) {
-											    echo '<option value="'.$valores[Nombre].'">'.$valores[Nombre].'</option>';}?>
+											    echo '<option value="'.$valores[ID].'">'.$valores[NombreC].'</option>';}?>
 										</select>
 		              </div>
 		             	<div class="col">
@@ -230,9 +231,9 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!--<script src="js/jquery-3.3.1.slim.min.js" type="text/javascript" charset="utf-8" async defer></script>-->
-    <script src="js/popper.min.js" type="text/javascript" charset="utf-8" async defer></script>
-    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <!--Script Funciones Php -->
-		<script src="js/index.js" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="js/index.js"></script>
 </body>
 </html>

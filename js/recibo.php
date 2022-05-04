@@ -10,7 +10,7 @@ require '../../vendor/autoload.php';
 
 // INICIO DE CONSULTA ##->
 //Conexión a Base de Datos
-include '../conexion.php'; 
+require_once '../conexion.php';
 //Recibir los datos para el Recibo
 //Propietario
 //$propietario = $_POST['propietario'];

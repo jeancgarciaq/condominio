@@ -11,32 +11,88 @@
 	<link href="../css/line-awesome.min.css" rel="stylesheet">
 </head>
 <body>
+<div class="container-fluid">
+	<!--INICIO BARRA NAVEGACIÓN -->
+  <ul class="nav justify-content-center bg-primary">
+    <li class="nav-item">
+      <a class="nav-link active text-light border-start border-white" href="../index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../condominio.php"><i class="las la-city"></i> Condominio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../propietarios.php"><i class="las la-user-alt"></i> Propietarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../pagos.php"><i class="las la-donate"></i> Pagos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../avisos.php"><i class="las la-receipt"></i> Avisos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="../cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white border-end" href="../cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
+    </li>
+  </ul>
+  <!--FIN BARRA NAVEGACIÓN -->
+</div>
 <?php  
 //Conexion a la base de datos
-include '../conexion.php';
+require_once '../conexion.php';
 
-//Recibimos los datos
-//Número de Apartamento
-$inmueble = $_POST['inmueble'];
-//$inmueble = '3';
-//Condominio
-$condominio = $_POST['condominio'];
-//$condominio = 'Res. San Francisco';
-//Fecha de hoy
+//id del condominio
+$idcondominio = $_POST['condominio'];
+//id del propietario
+$idpropietario = $_POST['inmueble'];
+//Fecha
 $fecha = $_POST['fecha'];
 //$fecha = '2020-03-12';
 //Nueva Referencia
 $referencia = $_POST['referencia'];
 
+#INICIO BUSCAR TASA
+$bidtasa = $conexion->query("SELECT MAX(tasaparalelo.ID) AS ID FROM tasaparalelo");
+$arrayidTasa = $bidtasa->fetch_array(MYSQLI_ASSOC);
+foreach ($bidtasa as $uid) {
+	$id = $uid['ID'];
+}
+
+$btasa = $conexion->query("SELECT * FROM tasaparalelo WHERE ID = '$id'");
+$arrayTasa = $btasa->fetch_array(MYSQLI_ASSOC);
+foreach ($btasa as $valort) {
+	//$tasa = $valort['tasa']; }
+	$apertura = $valort['Apertura'];
+	//var_dump($apertura);
+	$cierre = $valort['Cierre'];
+	//var_dump($cierre);
+}
+
+//Establecer el valor de la tasa
+if($cierre == 0) {
+	$tasa = $apertura;
+} else {
+	$tasa = $cierre;
+}
+## FIN BUSCAR TASA
+
+
 //Buscar el Nombre
-$bnombre = $conexion->query("SELECT * FROM propietarios WHERE Numero = '$inmueble'");
+$bnombre = $conexion->query("SELECT * FROM propietarios WHERE ID = '$idpropietario'");
 $arrayNombre = $bnombre->fetch_array(MYSQLI_ASSOC);
 foreach ($bnombre as $valor) {
 		$nombre = $valor['Nombre'];}
 
-if ($condominio == 'Res. San Francisco') { 
+if ($idcondominio == 2 OR $idcondominio == 3 OR $idcondominio == 4) { 
 		//Primero Buscamos el Pago y lo Guardamos
-		$consultaPago = "SELECT * FROM pagos WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+		$consultaPago = "SELECT * FROM pagos WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 		//Ejecutamos la consulta
 		$pago = $conexion->query($consultaPago);
 		//Lo convertimos en un array para extraer el valor
@@ -44,7 +100,7 @@ if ($condominio == 'Res. San Francisco') {
 		//Lo guardamos en una variable
 		$tp = $fp['Dolar'];
 		//Necesito saber cuántos filas de deuda tengo
-		$filasDeuda = "SELECT * from cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+		$filasDeuda = "SELECT * from cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 		//Ejecutamos la consulta
 		$ejecutarFD = $conexion->query($filasDeuda);
 		//Convertir en un array 
@@ -52,7 +108,7 @@ if ($condominio == 'Res. San Francisco') {
 		//Contamos los registros
 		$tr = $conexion->affected_rows;
 		//Ahora Vamos a consultar el monto de la deuda
-		$consultaDeuda = "SELECT SUM(Dolar) AS adeudado from cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+		$consultaDeuda = "SELECT SUM(Dolar) AS adeudado from cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 		//Se ejecuta la consulta
 		$deuda = $conexion->query($consultaDeuda);
 		//Lo convertimos en un array
@@ -67,7 +123,7 @@ if ($condominio == 'Res. San Francisco') {
 		if ($tp == $td) {
 
 			//Si son iguales voy a cambiar a todo a PAGADO
-			$modificarEstado = "UPDATE cxc SET Estado = 'PAGADO', Dolar = '0.00' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+			$modificarEstado = "UPDATE cxc SET Estado = 'PAGADO', Dolar = '0.00', Monto = '0.00' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 			//Ejecutamos la consulta
 			$consultamE = $conexion->query($modificarEstado);
 			//Ahora vamos a comprobar si fue exitosa la operación
@@ -80,7 +136,7 @@ if ($condominio == 'Res. San Francisco') {
 					</div>
 					';
 				//Actualizamos el pago como CONCILIADO
-				$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+				$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 				//Ejecutamos la consulta
 				$ejecutarAct = $conexion->query($actualizarpago);
 			}
@@ -99,9 +155,12 @@ if ($condominio == 'Res. San Francisco') {
 		#CASO 2: CUANDO LO PAGADO ES MAYOR A LO ADEUDADO
 		elseif ($tp > $td) {
 			#CASO 2.1: Cuando la Deuda es un sólo mes
+			//Calculo el valor para colocar en Monto
+			$diferenciam = $diferencia * $tasa;
+			$diferenciar = round($diferenciam,2);
 			if($tr == 1) {
 				//En este caso es fácil, porque vamos cambiar a PAGADO
-				$modificarEdoMonto = "UPDATE cxc SET Estado = 'PAGADO', Monto = '$diferencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+				$modificarEdoMonto = "UPDATE cxc SET Estado = 'PAGADO', Dolar = '$diferencia', Monto = '$diferenciar' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 				//Ejecutar consulta
 				$consultaEM = $conexion->query($modificarEdoMonto);
 				//Comprobamos que se haya realizado exitosa
@@ -114,7 +173,7 @@ if ($condominio == 'Res. San Francisco') {
 							</div>
 						';
 					//Actualizar el Pago
-					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 					$ejecutarAct = $conexion->query($actualizarpago);
 				}
 				//Si no se ejecuta la consulta realizó una advertencia
@@ -129,11 +188,11 @@ if ($condominio == 'Res. San Francisco') {
 			#CASO 2.2: Cuando la Deuda son varios meses
 			elseif ($tr > 1) {
 				//Cambio el estado de los registros
-				$consultaCestado = "UPDATE cxc SET Estado = 'PAGADO', Dolar = '0.00' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+				$consultaCestado = "UPDATE cxc SET Estado = 'PAGADO', Dolar = '0.00', Monto = '0.00' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 				$ejecutarConsulta = $conexion->query($consultaCestado);
 				
 				//Ahora selecciono el último registro para ello consulto el ID Más Alto
-				$seleccion = "SELECT MAX(cxc.ID) AS ID FROM cxc WHERE Nombre = '$nombre'";
+				$seleccion = "SELECT MAX(cxc.ID) AS ID FROM cxc WHERE idpropietario = 'idpropietario'";
 				//Ejecuto la consulta
 				$consulta = $conexion->query($seleccion);
 				//Lo convierto en un array
@@ -143,8 +202,11 @@ if ($condominio == 'Res. San Francisco') {
 					//Guardo el ID como una variable
 					$id = $key['ID'];
 				}
+				//Calculo el valor para colocar en Monto
+				$diferenciam = $diferencia * $tasa;
+				$diferenciar = round($diferenciam,2);
 				//Ahora procedo a ejecutar la consulta
-				$modificarMonto = "UPDATE cxc SET Dolar = '$diferencia', Estado = 'PAGADO' WHERE ID = '$id'";
+				$modificarMonto = "UPDATE cxc SET Dolar = '$diferencia', Monto = '$diferenciar', Estado = 'PAGADO' WHERE ID = '$id'";
 				//Ejecuto la consulta
 				$modificando = $conexion->query($modificarMonto); 
 				//Verifico que la última consulta sea exitosa
@@ -157,7 +219,7 @@ if ($condominio == 'Res. San Francisco') {
 									</div>
 								';
 					//Actualizar el Pago
-					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 					$ejecutarAct = $conexion->query($actualizarpago);
 				}
 				//En caso que no sea exitosa muestro una advertencia
@@ -177,7 +239,7 @@ if ($condominio == 'Res. San Francisco') {
 			if($tp < $td) {
 
 				//Realizo la consulta
-				$seleccion = "SELECT ID, Dolar FROM cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio' AND Estado = 'ADEUDADO' ORDER BY Emision ASC";
+				$seleccion = "SELECT ID, Dolar FROM cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO' ORDER BY Emision ASC";
 
 				$consulta = $conexion->query($seleccion);
 
@@ -187,7 +249,7 @@ if ($condominio == 'Res. San Francisco') {
 					if($tp > $monto) {
 
 						$tp = $tp - $monto;
-						$modificar = "UPDATE cxc SET Dolar = '0.00', Estado = 'PAGADO' WHERE ID = '$id'";
+						$modificar = "UPDATE cxc SET Dolar = '0.00', Monto = '0.00', Estado = 'PAGADO' WHERE ID = '$id'";
 						$ejecutar = $conexion->query($modificar);
 						echo '
 									<div class="container-fluid">
@@ -199,7 +261,10 @@ if ($condominio == 'Res. San Francisco') {
 					else {
 						
 						$tp = $monto - $tp;
-						$modificar = "UPDATE cxc SET Dolar = '$tp' WHERE ID = '$id'";
+						//Calculo el valor para colocar en Monto
+						$diferenciam = $tp * $tasa;
+						$diferenciar = round($diferenciam,2);
+						$modificar = "UPDATE cxc SET Dolar = '$tp', Monto = '$diferenciar' WHERE ID = '$id'";
 						$ejecutar = $conexion->query($modificar);
 						echo '
 									<div class="container-fluid">
@@ -208,11 +273,11 @@ if ($condominio == 'Res. San Francisco') {
 										</div>
 									</div>'.'<br>';
 						//Actualizar el Pago
-						$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+						$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 						$ejecutarAct = $conexion->query($actualizarpago);
 						//Resolver los qué están en 0.00 y Adeudado
 						//Se realiza la consulta
-						$adeudadoCero = $conexion->query("UPDATE cxc SET Estado = 'PAGADO' WHERE Dolar = '0.00' AND Estado = 'ADEUDADO' AND Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio'");
+						$adeudadoCero = $conexion->query("UPDATE cxc SET Estado = 'PAGADO' WHERE Dolar = '0.00' AND Estado = 'ADEUDADO' AND idpropietario = '$idpropietario'");
 						break;
 					}
 				}
@@ -230,10 +295,10 @@ if ($condominio == 'Res. San Francisco') {
 	
 ## INICIO CONDOMINIO BUCARE
 	
-elseif ($condominio == 'Edificio Bucare') {
+elseif ($idcondominio == 1) {
 	
-		//Primero Buscamos el Pago y lo Guardamos
-		$consultaPago = "SELECT * FROM pagos WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+				//Primero Buscamos el Pago y lo Guardamos
+		$consultaPago = "SELECT * FROM pagos WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 		//Ejecutamos la consulta
 		$pago = $conexion->query($consultaPago);
 		//Lo convertimos en un array para extraer el valor
@@ -241,7 +306,7 @@ elseif ($condominio == 'Edificio Bucare') {
 		//Lo guardamos en una variable
 		$tp = $fp['Monto'];
 		//Necesito saber cuántos filas de deuda tengo
-		$filasDeuda = "SELECT * from cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+		$filasDeuda = "SELECT * from cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 		//Ejecutamos la consulta
 		$ejecutarFD = $conexion->query($filasDeuda);
 		//Convertir en un array 
@@ -249,7 +314,7 @@ elseif ($condominio == 'Edificio Bucare') {
 		//Contamos los registros
 		$tr = $conexion->affected_rows;
 		//Ahora Vamos a consultar el monto de la deuda
-		$consultaDeuda = "SELECT SUM(Monto) AS adeudado from cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+		$consultaDeuda = "SELECT SUM(Monto) AS adeudado from cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 		//Se ejecuta la consulta
 		$deuda = $conexion->query($consultaDeuda);
 		//Lo convertimos en un array
@@ -264,7 +329,7 @@ elseif ($condominio == 'Edificio Bucare') {
 		if ($tp == $td) {
 
 			//Si son iguales voy a cambiar a todo a PAGADO
-			$modificarEstado = "UPDATE cxc SET Estado = 'PAGADO', Monto = '0.00' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+			$modificarEstado = "UPDATE cxc SET Estado = 'PAGADO', Monto = '0.00' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 			//Ejecutamos la consulta
 			$consultamE = $conexion->query($modificarEstado);
 			//Ahora vamos a comprobar si fue exitosa la operación
@@ -277,7 +342,7 @@ elseif ($condominio == 'Edificio Bucare') {
 					</div>
 					';
 				//Actualizamos el pago como CONCILIADO
-				$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+				$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 				//Ejecutamos la consulta
 				$ejecutarAct = $conexion->query($actualizarpago);
 			}
@@ -298,7 +363,7 @@ elseif ($condominio == 'Edificio Bucare') {
 			#CASO 2.1: Cuando la Deuda es un sólo mes
 			if($tr == 1) {
 				//En este caso es fácil, porque vamos cambiar a PAGADO
-				$modificarEdoMonto = "UPDATE cxc SET Estado = 'PAGADO', Monto = '$diferencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+				$modificarEdoMonto = "UPDATE cxc SET Estado = 'PAGADO', Monto = '$diferencia' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 				//Ejecutar consulta
 				$consultaEM = $conexion->query($modificarEdoMonto);
 				//Comprobamos que se haya realizado exitosa
@@ -311,7 +376,7 @@ elseif ($condominio == 'Edificio Bucare') {
 							</div>
 						';
 					//Actualizar el Pago
-					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 					$ejecutarAct = $conexion->query($actualizarpago);
 				}
 				//Si no se ejecuta la consulta realizó una advertencia
@@ -326,11 +391,11 @@ elseif ($condominio == 'Edificio Bucare') {
 			#CASO 2.2: Cuando la Deuda son varios meses
 			elseif ($tr > 1) {
 				//Cambio el estado de los registros
-				$consultaCestado = "UPDATE cxc SET Estado = 'PAGADO', Monto = '0.00' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Estado = 'ADEUDADO'";
+				$consultaCestado = "UPDATE cxc SET Estado = 'PAGADO', Monto = '0.00' WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO'";
 				$ejecutarConsulta = $conexion->query($consultaCestado);
 				
 				//Ahora selecciono el último registro para ello consulto el ID Más Alto
-				$seleccion = "SELECT MAX(cxc.ID) AS ID FROM cxc WHERE Nombre = '$nombre'";
+				$seleccion = "SELECT MAX(cxc.ID) AS ID FROM cxc WHERE idpropietario = 'idpropietario'";
 				//Ejecuto la consulta
 				$consulta = $conexion->query($seleccion);
 				//Lo convierto en un array
@@ -354,7 +419,7 @@ elseif ($condominio == 'Edificio Bucare') {
 									</div>
 								';
 					//Actualizar el Pago
-					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+					$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia'  WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 					$ejecutarAct = $conexion->query($actualizarpago);
 				}
 				//En caso que no sea exitosa muestro una advertencia
@@ -374,7 +439,7 @@ elseif ($condominio == 'Edificio Bucare') {
 			if($tp < $td) {
 
 				//Realizo la consulta
-				$seleccion = "SELECT ID, Monto FROM cxc WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio' AND Estado = 'ADEUDADO' ORDER BY Emision ASC";
+				$seleccion = "SELECT ID, Monto FROM cxc WHERE idpropietario = '$idpropietario' AND Estado = 'ADEUDADO' ORDER BY Emision ASC";
 
 				$consulta = $conexion->query($seleccion);
 
@@ -405,11 +470,11 @@ elseif ($condominio == 'Edificio Bucare') {
 										</div>
 									</div>'.'<br>';
 						//Actualizar el Pago
-						$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE Nombre = '$nombre' AND Inmueble = '$inmueble' AND  Condominio = '$condominio' AND Fecha = '$fecha' AND Conciliado = 'NO'";
+						$actualizarpago = "UPDATE pagos SET Conciliado = 'SI', Referencia2 = '$referencia' WHERE idpropietario = '$idpropietario' AND Fecha = '$fecha' AND Conciliado = 'NO'";
 						$ejecutarAct = $conexion->query($actualizarpago);
 						//Resolver los qué están en 0.00 y Adeudado
 						//Se realiza la consulta
-						$adeudadoCero = $conexion->query("UPDATE cxc SET Estado = 'PAGADO' WHERE Monto = '0.00' AND Estado = 'ADEUDADO' AND Nombre = '$nombre' AND Inmueble = '$inmueble' AND Condominio = '$condominio'");
+						$adeudadoCero = $conexion->query("UPDATE cxc SET Estado = 'PAGADO' WHERE Monto = '0.00' AND Estado = 'ADEUDADO' AND idpropietario = '$idpropietario'");
 						break;
 					}
 				}
@@ -438,7 +503,7 @@ else {
 		<div class="row">
 			<div class="col-6"></div>
 			<div class="col-1">
-				<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.jpg"><br>Inicio</a></p>
+				<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.png" width="60px" height="60px"><br>Inicio</a></p>
 			</div>
 			<div class="col-1">
 				<p style="text-align: center;"><a href="../pagos.php"><img src="../img/caja.png" width="50px" height="70px"><br>Pagos</a></p>

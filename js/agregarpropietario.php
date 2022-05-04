@@ -1,6 +1,6 @@
 <?php  
 //Conexión a la Base de Datos
-include '../conexion.php';
+require_once '../conexion.php';
 
 //Reciben los datos
 //Persona Responsable
@@ -11,11 +11,13 @@ $correo = $_POST['correo'];
 $correo2 = $_POST['correo2']; 
 //var_dump($correo);
 //Nombre del Condominio
-$condominio = $_POST['condominio']; 
-//var_dump($condominio);
+$idcondominio = $_POST['condominio']; 
+//var_dump($idcondominio);
 //Número de RIF
 $inmueble = $_POST['inmueble']; 
 //var_dump($inmueble);
+$alicuota = $_POST['alicuota'];
+//var_dump($alicuota);
 //Número de Teléfono
 $telefono = $_POST['telefono']; 
 //var_dump($telefono);
@@ -29,7 +31,27 @@ $ciudad = $_POST['ciudad'];
 $estado = $_POST['estado']; 
 //var_dump($estado);
 
-$consulta = "INSERT INTO propietarios (ID, Nombre, Condominio, Numero, Telefono, Correo, Correo2, Direccion, Ciudad, Estado) VALUES (null,'$nombre','$condominio','$inmueble', '$telefono', '$correo', '$correo2', '$direccion','$ciudad', '$estado')";
+//NOMBRE DEL CONDOMINIO
+if($idcondominio == 1) {
+	$condominio = 'Edificio Bucare';
+} elseif($idcondominio == 2) {
+	$condominio = 'Res. San Francisco';
+} elseif($idcondominio == 3) {
+	$condominio = 'Torre 1, Res. San Francisco';
+} else {
+	$condominio = 'Condominio Samán';
+}
+
+//Forzar ID a 4
+if ($idcondominio == 0){
+	$idcondominio = 4;
+}
+
+
+/* SENTENCIA SQL PARA CREAR UN FOREIGN KEY
+ALTER TABLE `nombretabla1` ADD CONSTRAINT `nombreclave` FOREIGN KEY (`columnatabla1`) REFERENCES `nombretabla2`(`clave2`) ON DELETE RESTRICT ON UPDATE CASCADE;
+*/
+$consulta = "INSERT INTO propietarios (ID, Nombre, Inmueble, idcondominio,  Telefono, Correo, Correo2, Direccion, Ciudad, Estado, Alicuota) VALUES (null,'$nombre', '$inmueble', '$idcondominio', '$telefono', '$correo', '$correo2', '$direccion','$ciudad', '$estado', '$alicuota')";
 
 if ($conexion->query($consulta)) {?>
 
@@ -46,6 +68,34 @@ if ($conexion->query($consulta)) {?>
 </head>
 <body>
 	<article class="container-fluid">
+		<!-- INICIO MENÚ NAV -->
+		<ul class="nav justify-content-center bg-primary">
+		  <li class="nav-item">
+		    <a class="nav-link active text-light border-left" href="../index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../condominio.php"><i class="las la-city"></i> Condominio</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../pagos.php"><i class="las la-donate"></i> Pagos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../avisos.php"><i class="las la-receipt"></i> Avisos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left border-right" href="../cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
+		  </li>
+		</ul>
+		<!-- FIN MENÚ NAV-->
 		<header id="header" class="">
 			<h1><img src="../img/trabajo-en-equipo.png" class="img-fluid" width="5%" height="10%"> MÓDULO 2: PROPIETARIOS</h1>
 		</header> 
@@ -69,7 +119,7 @@ if ($conexion->query($consulta)) {?>
 <?php }
 	else { ?>
 			<div class="alert alert-danger" role="alert">
-  				<p style="text-align: center">Se ha producido un error, por favor inténtelo de nuevo. <br> Si el error persiste comuníquese con el administrador <a href="mailto:jcvictory@hotmail.com"><i class="las la-envelope"></i> Enviar Correo</a> y/o <a href="https://api.whatsapp.com/send?phone=584144812738"><i class="lab la-whatsapp"></i> Escribir al WhatsApp</a></p>
+  				<p style="text-align: center">Se ha producido el siguiente <?php  printf(" Error: %s\n", $conexion->error); ?> por favor inténtelo de nuevo. <br> Si el error persiste comuníquese con el administrador <a href="mailto:jcvictory@hotmail.com"><i class="las la-envelope"></i> Enviar Correo</a> y/o <a href="https://api.whatsapp.com/send?phone=584144812738"><i class="lab la-whatsapp"></i> Escribir al WhatsApp</a></p>
 			</div>
 <?php }
 /* cerrar la conexión */
@@ -80,7 +130,7 @@ $conexion->close();
 			<div class="row">
 				<div class="col-6"></div>
 				<div class="col-1">
-					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.jpg"><br>Inicio</a></p>
+					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.png" width="60px" height="60px"><br>Inicio</a></p>
 				</div>
 				<div class="col-1">
 					<p style="text-align: center;"><a href="../propietarios.php"><img src="../img/trabajo-en-equipo.png" width="50px" height="70px"><br>Propietarios</a></p>

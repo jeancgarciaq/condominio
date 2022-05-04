@@ -1,6 +1,6 @@
 <?php  
 //Conexión a la Base de Datos
-include '../conexion.php';
+require_once '../conexion.php';
 
 //Reciben los datos
 //Empresa o Responsable

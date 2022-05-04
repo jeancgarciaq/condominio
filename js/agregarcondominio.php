@@ -1,6 +1,6 @@
 <?php  
 //Conexión a la Base de Datos
-include '../conexion.php';
+require_once '../conexion.php';
 
 //Reciben los datos
 //Persona Responsable
@@ -87,7 +87,7 @@ $conexion->close();
 			<div class="row">
 				<div class="col-6"></div>
 				<div class="col-1">
-					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.jpg"><br>Inicio</a></p>
+					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.png" width="60px" height="60px"><br>Inicio</a></p>
 				</div>
 				<div class="col-1">
 					<p style="text-align: center;"><a href="../condominio.php"><img src="../img/pueblo.png" width="50px" height="70px"><br>Condominio</a></p>

@@ -148,6 +148,6 @@ try {
     $mail->send();
     echo 'El Mensaje se ha enviado';
     } catch (Exception $e) {
-        echo "El Mensaje no se ha Enviado. Error del Envío: {$mail->ErrorInfo}";
+        echo "El Mensaje no se ha Enviado. Error del Envío:". $mail->{$mail->ErrorInfo};
     } 
 }

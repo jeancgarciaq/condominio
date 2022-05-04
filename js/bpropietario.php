@@ -1,6 +1,6 @@
 <?php  
 //Conexión a la base de datos
-include '../conexion.php';
+require_once '../conexion.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,103 +15,139 @@ include '../conexion.php';
 </head>
 <body>
 	<div class="container-fluid">
+		<!-- INICIO MENÚ NAV -->
+		<ul class="nav justify-content-center bg-primary">
+		  <li class="nav-item">
+		    <a class="nav-link active text-light border-left" href="../index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../condominio.php"><i class="las la-city"></i> Condominio</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../pagos.php"><i class="las la-donate"></i> Pagos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../avisos.php"><i class="las la-receipt"></i> Avisos</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left" href="../cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link text-light border-left border-right" href="../cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
+		  </li>
+		</ul>
+		<!-- FIN MENÚ NAV-->
 		<h1><img src="../img/trabajo-en-equipo.png" class="img-fluid" width="10%" height="10%"> MÓDULO 2: PROPIETARIOS</h1><br>
 		<section class="row">
-			<article class="col"></article>
-			<article class="col-8">
+			<article class="col-1"></article>
+			<article class="col">
 				<h2>DATOS PERSONALES</h2>
 				<?php
 				//Número de Inmueble
-				$inmueble = $_POST['inmueble'];
-				//var_dump($inmueble);
+				$idpropietario = $_POST['inmueble'];
+				//var_dump($idpropietario);
 				//Condominio
-				$condominio = $_POST['condominio'];
-				//Si seleccionó todos
-				if ($inmueble == 'todos') {
-					$nombre = 'todos';
-				}
-				else {
-				//Buscar el nombre
-				$bnombre = $conexion->query("SELECT * FROM propietarios WHERE Numero = '$inmueble'");
-				$arrayNombre = $bnombre->fetch_array(MYSQLI_ASSOC);
-				foreach ($bnombre as $fila) {
-					$nombre = $fila['Nombre'];
-				} }
-				//var_dump($nombre);
-				//Vamos a Realizar una consulta de todos los Propietario
-				if($nombre == 'todos')
-				{?>
-					<p><b><i class="las la-user-alt"></i> Propietario:</b> <?php echo strtoupper($nombre); ?></p>
-					<p><b><i class="la la-home"></i> Inmueble Nº:</b> <?php echo $inmueble; ?></p>
-				<?php
-					//Vamos a consultar la lista de propietarios
-					$listaPropietarios = $conexion->query("SELECT * FROM propietarios WHERE Condominio = '$condominio'");
-					//Ahora Vamos a construir una tabla con éstos valores
-					?>
-					<table class='table table-striped'>
-					  <thead>
-					    <tr>
-					      <th scope='col'>ID</th>
-					      <th scope='col'>NOMBRE</th>
-					      <th scope='col'>Nº</th>
-					      <th scope='col'>CORREO</th>
-					      <th scope='col'>TELÉFONO</th>
-					      <th scope='col'>CONDOMINIO</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-							<?php
-								while ($filaPropietarios =  $listaPropietarios->fetch_array(MYSQLI_ASSOC)) {?>
-							<tr>
-								<td><?php echo $filaPropietarios['ID']; ?></td>
-								<td><?php echo $filaPropietarios['Nombre']; ?></td>
-								<td><?php echo $filaPropietarios['Numero']; ?></td>
-								<td><?php echo $filaPropietarios['Correo']; ?></td>
-								<td><?php echo $filaPropietarios['Telefono']; ?></td>
-								<td><?php echo $filaPropietarios['Condominio'];}?></td>
-							</tr>
-						</tbody>
-					</table>
-					<br>
-				<?php 
-				} 
-				else { 
-					//Vamos a Realizar la Consulta
-					$buscarPropietario = $conexion->query("SELECT * FROM propietarios WHERE Nombre = '$nombre' AND Condominio = '$condominio' AND Numero = '$inmueble' ");
-					$arrayPropietario = $buscarPropietario->fetch_array(MYSQLI_ASSOC);
+				$idcondominio = $_POST['condominio'];
+				//var_dump($idcondominio);
+				
+				//Si selecciono todos
+				
+				if($idpropietario == 'todos') {
+					  $nombre = 'Todos';
+					} else {
+					  $buscarNombre = $conexion->query("SELECT * FROM propietarios WHERE ID = '$idpropietario'");
+					  $arrayNombre = $buscarNombre->fetch_array(MYSQLI_ASSOC);
+					  foreach($buscarNombre as $nombreP) {
+					    $nombre = $nombreP['Nombre'];
+					  } 
+					}
 
-					foreach ($buscarPropietario as $fila) {
+					if($nombre == 'todos') {
+					    //Buscar nombre del Condominio
+					    $buscarCondominio = $conexion->query("SELECT * FROM condominios WHERE ID = '$idcondominio'");
+					    $arrayCondominio = $buscarCondominio->fetch_array(MYSQLI_ASSOC);
+					    foreach ($buscarCondominio as $filaC) {
+					      	$nombreCondominio = $filaC['NombreC'];}
 
-					?>
-				<!-- VOY A CONSTRUIR UNA HOJA CON LOS DATOS DEL PROPIETARIO -->
-				<div class="row">
-					<div class="col"></div>
-					<div class="col">
-						<strong><i class="las la-user-alt"></i> Propietario:</strong> <?php echo $fila['Nombre'];?><br>
-						<strong><i class="la la-home"></i> Inmueble Nº:</strong> <?php echo $fila['Numero']; ?><br>
-						<strong><i class="las la-envelope"></i> Correo:</strong> <?php echo $fila['Correo']; ?><br>
-						<strong><i class="las la-phone"></i> Teléfono:</strong> <?php echo $fila['Telefono']; ?><br>
-						<strong><i class="la la-city"></i> Condominio:</strong> <?php echo $fila['Condominio'];} ?>
-					</div>
-					<div class="col"></div>
-				</div>
+					    //Identificación?>
+					    <p><b><i class="las la-user-alt"></i> Propietario:</b> <?php echo strtoupper($nombre); ?></p>
+					    <p><b><i class="la la-home"></i> Inmueble Nº:</b> PB</p>
+					    <p><b><i class="la la-city"></i> Condominio:</b> <?php echo $nombreCondominio; ?></p>
+					    <br>
+					    <table class='table table-striped'>
+					            <thead>
+					              <tr>
+					                <th scope='col'>Nº</th>
+					                <th scope='col'>NOMBRE</th>
+					                <th scope='col'>CORREO</th>
+					                <th scope='col'>TELÉFONO</th>
+					              </tr>
+					            </thead>
+					            <tbody>
 					<?php
-				} 
-				?>
-				<header id="header">
+					    //Buscar todos los propietarios
+					    $buscarPropietarios = $conexion->query("SELECT * 
+					    										FROM propietarios 
+					    										WHERE idcondominio = '$idcondominio'");
+					    while($filaPropietario = $buscarPropietarios->fetch_array(MYSQLI_ASSOC)) {?>
+					      <!--Se construye la tabla para mostrar los resultados -->
+					              <tr>
+					                <td><?php echo $filaPropietario['Inmueble'];?></td>
+					                <td><?php echo $filaPropietario['Nombre'];?></td>
+					                <td><?php echo $filaPropietario['Correo'];?></td>
+					                <td><?php echo $filaPropietario['Telefono'];} ?></td>
+					              </tr>
+					            </tbody>
+					          </table>
+					<?php    }
+					//Fin IF TODOS
+					else {
+						//Buscar nombre del Condominio
+					    $buscarCondominio = $conexion->query("SELECT * FROM condominios WHERE ID = '$idcondominio'");
+					    while($filaCondominio = $buscarCondominio->fetch_array(MYSQLI_ASSOC)) {
+					      $nombreCondominio = $filaCondominio['NombreC'];
+					    }
+					    //Identificación?>
+					    <h3><b><i class="la la-city"></i> Condominio:</b> <?php echo $nombreCondominio; ?></h3>
+					    <br>
+					<?php
+					    //Vamos a Realizar la Consulta
+					    $buscarPropietario = $conexion->query("SELECT *
+					    										FROM propietarios 
+					    										WHERE ID = '$idpropietario'");
+					    $arrayPropietario = $buscarPropietario->fetch_array(MYSQLI_ASSOC);
+
+					    foreach ($buscarPropietario as $fila) {?>
+					    <!-- VOY A CONSTRUIR UNA HOJA CON LOS DATOS DEL PROPIETARIO -->
+					    <div class="row">
+					      <div class="col"></div>
+					      <div class="col">
+					        <strong><i class="las la-user-alt"></i> Propietario:</strong> <?php echo $fila['Nombre'];?><br>
+					        <strong><i class="la la-home"></i> Inmueble Nº:</strong> <?php echo $fila['Inmueble']; ?><br>
+					        <strong><i class="las la-envelope"></i> Correo:</strong> <?php echo $fila['Correo']; ?><br>
+					        <strong><i class="las la-phone"></i> Teléfono:</strong> <?php echo $fila['Telefono'];} }?></div>
+					      <div class="col"></div>
+					    </div>
+				</article>
+				<article class="col-3"></article>
+				<footer class="container-fluid">
 					<div class="row">
 						<div class="col-2"></div>
 						<div class="col">
-							<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.jpg"><br>Inicio</a></p>
+							<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.png" width="60px" height="60px"><br>Inicio</a></p>
 						</div>
 						<div class="col">
 							<p style="text-align: center;"><a href="../propietarios.php"><img src="../img/trabajo-en-equipo.png" width="50px" height="70px"><br>Propietarios</a></p>
 						</div>
 						<div class="col"></div>
 					</div>
-				</header>
-			</article>
-			<article class="col"></article>
+				</footer>
 		</section>
 	</div>
 </body>

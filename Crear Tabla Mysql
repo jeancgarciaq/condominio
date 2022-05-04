@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `reporte_cxc` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+    `idpropietario` int(11) NOT NULL,
+    `Anterior` decimal(12,2),
+    `Enero` decimal(12,2),
+    `Febrero` decimal(12,2),
+    `Marzo` decimal(12,2),
+    `Abril` decimal(12,2),
+    PRIMARY KEY (`ID`),
+    KEY fkr_idpropietario (`idpropietario`),
+    CONSTRAINT `fkr_idpropietario` FOREIGN KEY (`idpropietario`) REFERENCES propietarios (`ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+    ) ENGINE=INNODB

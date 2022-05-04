@@ -1,11 +1,12 @@
 <?php  
-	include('../conexion.php');
+//Conexion a la base de datos
+require_once '../conexion.php';
 
 //Reciben la búsqueda
 $buscar = $_POST['condominio']; 
 //$buscar = "Res. San Francisco";
 
-$consulta = "SELECT * FROM condominios WHERE Nombre LIKE '$buscar'";
+$consulta = "SELECT * FROM condominios WHERE ID = '$buscar'";
 
 if ($resultado = $conexion->query($consulta)) {
 
@@ -32,7 +33,7 @@ if ($resultado = $conexion->query($consulta)) {
 			<div class="col-4"></div>
 			<div class="col-8">
 				<p><strong><i class="la la-hashtag"></i>ID: </strong><?php echo '<span>'.$row['ID'].'</span>';?></p>
-				<p><strong><i class="la la-city"></i> Condominio: </strong> <?php   echo '<span>'.$row['Nombre'].'</span>';?></p>
+				<p><strong><i class="la la-city"></i> Condominio: </strong> <?php   echo '<span>'.$row['NombreC'].'</span>';?></p>
 				<p><strong><i class="la la-user-tie"></i> Responsable: </strong> <?php   echo '<span>'.$row['Responsable'].'</span>';?></p>
 				<p"><strong><i class="la la-address-card"></i> Cargo:</strong> <?php   echo '<span>'.$row['Cargo'].'</span>';?></p>
 				<p><strong><i class="la la-envelope-o"></i> Correo:</strong> <?php   echo '<span>'.$row['Correo'].'</span>';?></p>
@@ -49,7 +50,7 @@ if ($resultado = $conexion->query($consulta)) {
 			<div class="row">
 				<div class="col-6"></div>
 				<div class="col-1">
-					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.jpg"><br>Inicio</a></p>
+					<p style="text-align: center;"><a href="../index.html"><img src="../img/Logo.png" width="60px" height="60px"><br>Inicio</a></p>
 				</div>
 				<div class="col-1">
 					<p style="text-align: center;"><a href="../condominio.php"><img src="../img/pueblo.png" width="50px" height="70px"><br>Condominio</a></p>

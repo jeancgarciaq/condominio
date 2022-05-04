@@ -13,42 +13,53 @@
 </head>
 <body>
 <div class="container-fluid">
-	<ul class="nav justify-content-center bg-primary">
-	  <li class="nav-item">
-	    <a class="nav-link active text-light border-left" href="index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="condominio.php"><i class="las la-city"></i> Condominio</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="propietarios.php"><i class="las la-user-alt"></i> Propietarios</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="pagos.php"><i class="las la-donate"></i> Pagos</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="avisos.php"><i class="las la-receipt"></i> Avisos</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left" href="cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link text-light border-left border-right" href="cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
-	  </li>
-	</ul>
+	<!--INICIO BARRA NAVEGACIÓN -->
+  <ul class="nav justify-content-center bg-primary">
+    <li class="nav-item">
+      <a class="nav-link active text-light border-start border-white" href="index.html"><i class="las la-grip-horizontal"></i> Inicio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="condominio.php"><i class="las la-city"></i> Condominio</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="propietarios.php"><i class="las la-user-alt"></i> Propietarios</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="proveedores.php"><i class="las la-store-alt"></i> Proveedores</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="pagos.php"><i class="las la-donate"></i> Pagos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="gastos.php"><i class="las la-file-invoice-dollar"></i> Gastos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="avisos.php"><i class="las la-receipt"></i> Avisos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white" href="cxc.php"><i class="las la-cash-register"></i> Cuentas x Cobrar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-light border-start border-white border-end" href="cxp.php"><i class="las la-credit-card"></i> Cuentas x Pagar</a>
+    </li>
+  </ul>
+  <!--FIN BARRA NAVEGACIÓN -->
 	<h1><img src="img/negocios-y-finanzas.png" class="img-fluid" id="iconoM4"> MÓDULO 4: GASTOS</h1>
 	<p class="fuente">En este módulo puede añadir, modificar, borrar o consultar los gastos mensuales por condominio.</p>
 	
 	<!-- Empieza las pestañas -->
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
-		<li class="nav-item">
-			<a class="nav-link active" id="editar-tab" data-toggle="tab" href="#editar" role="tab" aria-controls="editar" aria-selected="true"><i class="la la-pen"></i> <span class="pestana">Editar</span></a>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link active" id="editar-tab" data-bs-toggle="tab" href="#editar" role="tab" aria-controls="editar" aria-selected="true"><i class="la la-pen"></i> <span class="pestana">Añadir</span></a>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="buscar-tab" data-toggle="tab" href="#buscar" role="tab" aria-controls="buscar" aria-selected="false"><i class="la la-search"></i> <span class="pestana">Buscar</span></a>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="cuota-tab" data-bs-toggle="tab" href="#cuota" role="tab" aria-controls="cuota" aria-selected="true"><i class="las la-piggy-bank"></i> <span class="pestana">Cuota</span></a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="cuotaespecial-tab" data-bs-toggle="tab" href="#cuotaespecial" role="tab" aria-controls="cuotaespecial" aria-selected="true"><i class="las la-piggy-bank"></i> <span class="pestana">Cuota Especial</span></a>
+		</li>
+		<li class="nav-item" role="presentation">
+			<a class="nav-link" id="buscar-tab" data-bs-toggle="tab" href="#buscar" role="tab" aria-controls="buscar" aria-selected="false"><i class="la la-search"></i> <span class="pestana">Buscar</span></a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
@@ -59,39 +70,49 @@
   			<article class="col-2"></article>
   			<article class="col-8">
   				<form action="js/agregargasto.php" method="post" accept-charset="utf-8">
-  					<div class="row">
-  						<div class="col form-group">
+  					<div class="row input-group">
+  						<div class="col">
 								<label for="condominio"><i class="la la-city"></i> Condominio</label>
-								<select id='lista1' class="form-control" name="condominio" required>
+								<select id='lista1' class="form-select" name="condominio" required>
 									<option value="" selected>Seleccione:</option>
 									<?php
-									    $query = $conexion->query ("SELECT Nombre FROM condominios");
+									    $query = $conexion->query ("SELECT * FROM condominios");
 									    while ($valores = mysqli_fetch_array($query)) {
-									        echo '<option value="'.$valores[Nombre].'">'.$valores[Nombre].'</option>';}?>
+									        echo '<option value='.$valores[ID].'>'.$valores[NombreC].'</option>';}?>
 								</select>
 							</div>
-							<div class="col form-group" id="select2lista">
-								
-							</div>
-	  					<div class="col form-group">
+	  					<div class="col">
 	  						<label for="comprobante"><i class="las la-cash-register"></i> Nº Comprobante:</label>
 	  						<input class="form-control" type="text" name="comprobante" value="" placeholder="Número Comprobante Egreso">
 	  					</div>
-	  					<div class="col form-group">
-								<label for="monto"><i class="las la-coins"></i> Monto:</label>
-	  						<input class="form-control" type="number" name="monto" step="any" placeholder="123456789.00" required>
+	  					<div class="col">
+								<label for="monto"><i class="las la-coins"></i> Monto Bs.:</label>
+	  						<input class="form-control" type="number" name="monto" step="any" placeholder="123456789.00">
+	  					</div>
+	  					<div class="col">
+								<label for="montod"><i class="las la-coins"></i> Monto $:</label>
+	  						<input class="form-control" type="number" name="montod" step="any" placeholder="123456789.00">
 	  					</div>
 						</div>
-						<div class="row">
-	  					<div class="col form-group">
+						<div class="row input-group">
+	  					<div class="col-8">
 								<label for="descripcion"><i class="las la-file-alt"></i> Descripción:</label>
 								<textarea class="form-control" name="descripcion"></textarea>
 							</div>
-	  					<div class="col form-group">
+	  					<div class="col-4">
 								<label for="fecha"><i class="las la-calendar"></i> Fecha:</label>
 								<input class="form-control" type="date" name="fecha" value="" placeholder="">
+						</div>
+						<!--<div class="col-2">
+							<label for="fecha"><i class="las la-question-circle"></i> ¿CxP?</label>
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" name="cxp" value="No" id="flexCheckDefault">
+							  <label class="form-check-label" for="flexCheckDefault">
+							    Si
+							  </label>
 							</div>
-  					</div>
+						</div>-->
+  					</div><br>
   					<!-- Botones -->
   					<p style="text-align: center;">
 					  	<button type="submit" class="btn btn-lg btn-success"><i class="las la-plus"></i> Añadir</button>
@@ -100,29 +121,108 @@
   				</form>
   			</article>
   			<article class="col-2"></article>
-  			<!-- Script para Select Dinámico -->
-				<script type="text/javascript">
-					$(document).ready(function(){
-						$('#lista1').val(1);
-						recargarLista();
-
-						$('#lista1').change(function(){
-						recargarLista();});
-					})
-				</script>
-				<script type="text/javascript">
-					function recargarLista(){
-						$.ajax({
-										type:"POST",
-										url:"js/listap.php",
-										data:"condominio=" + $('#lista1').val(),
-										success:function(r){
-											$('#select2lista').html(r);
-										}
-									});
-					}
-				</script>
-				<!-- Fin de Script -->
+		</section>		
+  	</div>
+  	<div class="tab-pane fade" id="cuota" role="tabpanel" 	aria-labelledby="cuota-tab">
+			<p class="container-fluid"><strong><i class="la la-book"></i> Instrucciones:</strong> Complete todos los datos del formulario.</p>
+  		<!--Aquí Inicia el Formulario -->
+  		<section class="row">
+  			<article class="col-2"></article>
+  			<article class="col-8">
+  				<form action="js/agregarcuota.php" method="post" accept-charset="utf-8">
+  					<div class="row input-group">
+  						<div class="col">
+								<label for="condominio"><i class="la la-city"></i> Condominio</label>
+								<select id='lista2' class="form-select" name="condominio" required>
+									<option value="" selected>Seleccione:</option>
+									<?php
+									    $query = $conexion->query ("SELECT * FROM condominios");
+									    while ($valores = mysqli_fetch_array($query)) {
+									        echo '<option value='.$valores[ID].'>'.$valores[NombreC].'</option>';}?>
+								</select>
+							</div>
+	  					<div class="col">
+	  						<label for="comprobante"><i class="las la-cash-register"></i> Nº Comprobante:</label>
+	  						<input class="form-control" type="text" name="comprobante" value="" placeholder="Número Comprobante Egreso">
+	  					</div>
+	  					<div class="col">
+								<label for="monto"><i class="las la-coins"></i> Monto Bs.:</label>
+	  						<input class="form-control" type="number" name="monto" step="any" placeholder="123456789.00">
+	  					</div>
+	  					<div class="col">
+								<label for="montod"><i class="las la-coins"></i> Monto $:</label>
+	  						<input class="form-control" type="number" name="montod" step="any" placeholder="123456789.00">
+	  					</div>
+						</div>
+						<div class="row input-group">
+	  					<div class="col-8">
+								<label for="descripcion"><i class="las la-file-alt"></i> Descripción:</label>
+								<textarea class="form-control" name="descripcion"></textarea>
+							</div>
+	  					<div class="col-4">
+								<label for="fecha"><i class="las la-calendar"></i> Fecha:</label>
+								<input class="form-control" type="date" name="fecha" value="" placeholder="">
+							</div>
+  					</div><br>
+  					<!-- Botones -->
+  					<p style="text-align: center;">
+					  	<button type="submit" class="btn btn-lg btn-success"><i class="las la-plus"></i> Añadir</button>
+					  	<button type="reset" class="btn btn-lg btn-danger"><i class="las la-eraser"></i> Reiniciar</button>	
+					  </p>
+  				</form>
+  			</article>
+  			<article class="col-2"></article>
+		</section>		
+  	</div>
+  	<div class="tab-pane fade" id="cuotaespecial" role="tabpanel" 	aria-labelledby="cuotaespecial-tab">
+			<p class="container-fluid"><strong><i class="la la-book"></i> Instrucciones:</strong> Complete todos los datos del formulario.</p>
+  		<!--Aquí Inicia el Formulario -->
+  		<section class="row">
+  			<article class="col-2"></article>
+  			<article class="col-8">
+  				<form action="js/agregarcuotaespecial.php" method="post" accept-charset="utf-8">
+  					<div class="row input-group">
+  						<div class="col">
+								<label for="condominio"><i class="la la-city"></i> Condominio</label>
+								<select id='lista2' class="form-select" name="condominio" required>
+									<option value="" selected>Seleccione:</option>
+									<?php
+									    $query = $conexion->query ("SELECT * FROM condominios");
+									    while ($valores = mysqli_fetch_array($query)) {
+									        echo '<option value='.$valores[ID].'>'.$valores[NombreC].'</option>';}?>
+								</select>
+							</div>
+	  					<div class="col">
+	  						<label for="comprobante"><i class="las la-cash-register"></i> Nº Comprobante:</label>
+	  						<input class="form-control" type="text" name="comprobante" value="" placeholder="Número Comprobante Egreso">
+	  					</div>
+	  					<div class="col">
+								<label for="monto"><i class="las la-coins"></i> Monto Bs.:</label>
+	  						<input class="form-control" type="number" name="monto" step="any" placeholder="123456789.00">
+	  					</div>
+	  					<div class="col">
+								<label for="montod"><i class="las la-coins"></i> Monto $:</label>
+	  						<input class="form-control" type="number" name="montod" step="any" placeholder="123456789.00">
+	  					</div>
+						</div>
+						<div class="row input-group">
+	  					<div class="col-8">
+								<label for="descripcion"><i class="las la-file-alt"></i> Descripción:</label>
+								<textarea class="form-control" name="descripcion"></textarea>
+							</div>
+	  					<div class="col-4">
+								<label for="fecha"><i class="las la-calendar"></i> Fecha:</label>
+								<input class="form-control" type="date" name="fecha" value="" placeholder="">
+							</div>
+  					</div><br>
+  					<!-- Botones -->
+  					<p style="text-align: center;">
+					  	<button type="submit" class="btn btn-lg btn-success"><i class="las la-plus"></i> Añadir</button>
+					  	<button type="reset" class="btn btn-lg btn-danger"><i class="las la-eraser"></i> Reiniciar</button>	
+					  </p>
+  				</form>
+  			</article>
+  			<article class="col-2"></article>
 		</section>		
   	</div>
   	<div class="tab-pane fade" id="editar" role="tabpanel" aria-labelledby="editar-tab">

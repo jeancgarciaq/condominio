@@ -1,5 +1,5 @@
 <?php  
-include('../conexion.php');
+require_once '../conexion.php';
 
 //
 $tasa = $_POST['tasa'];

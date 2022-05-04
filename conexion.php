@@ -1,41 +1,23 @@
 <?php
-//Conexion a Base de Datos por Procedimiento
-// Realizamos la conexión
-/*$conectar = mysqli_connect('localhost','administrador','jean9010jcBD','condominio');
-
-// Codificamos el juego de caracteres
-$conectar->set_charset('utf8');
-
-if(mysqli_connect_errno($conectar)) {
-  echo "Fallo al conectar a MySQL: " . mysqli_connect_error();
-}
-else {
-echo "<h1>Has realizado una conexión exitosa!!!</h1>";
-}*/
-
-
-// Conexion a Base de Datos por Objeto
-// Defino Servidor, Base de Datos, Usuario y Clave
-/*$servidor = 'sql212.byethost.com';
-$base = 'b4_22428855_transfiero';
-$user = 'b4_22428855';
-$pass = 'jean9010jcFH';*/
-
+//Variables de conexión
 $servidor = '127.0.0.1';
 $base = 'condominio';
 $user = 'administrador';
 $pass = 'jean9010jcBD';
 
-$conexion = new mysqli ($servidor, $user, $pass, $base);
+/*try {
+      $conexion = new PDO("mysql:host=127.0.0.1;dbname=condominio", $user, $pass);
+      $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      echo "Conexión realizada Satisfactoriamente";
+    }
+ catch(PDOException $e) {
+          echo "La conexión ha fallado: " .$e->getMessage();
+       }
 
-// Codificamos el juego de caracteres
-$conexion->set_charset('utf8mb4');
-
-if(mysqli_connect_errno($conexion)) {
-  echo "Fallo al conectar a MySQL: " . mysqli_connect_error();
+$conexion = null;*/       
+$conexion = new mysqli("127.0.0.1", "root", "", "condominio");
+if ($conexion->connect_errno) {
+    echo "Fallo al conectar a MySQL: (" . $conexion->connect_errno . ") " . $conexion->connect_error;
 }
-/*else {
-echo "<h1>Has realizado una conexión exitosa!!!</h1>";
-}*/
-
+echo $conexion->host_info . "\n";
 ?>

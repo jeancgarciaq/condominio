@@ -1,22 +1,23 @@
 <?php 
-include '../conexion.php';
+//Conexion a la base de datos
+require_once '../conexion.php';
 
-$condominio=$_POST['condominio'];
+$idcondominio = $_POST['condominio'];
 
-	$sql="SELECT 
+	$sql = "SELECT 
 			 * 
 		from propietarios 
-		where Condominio ='$condominio'";
+		where idcondominio = '$idcondominio' ORDER BY Inmueble ASC";
 
-	$result=$conexion->query($sql);
+	$result = $conexion->query($sql);
 
-	$cadena="<label for='nombre'><i class='la la-signature'></i> Nombre</label> 
-			<select class='form-control'  id='lista2' name='inmueble'>
+	$cadena="<label for='inmueble'><i class='la la-signature'></i> Nombre</label> 
+			<select class='form-select'  id='lista2' name='inmueble'>
 				<option value='' selected>Seleccione:</option>
 				<option value='todos'>Todos</option>
 			";
-	while ($ver= $result->fetch_array(MYSQLI_ASSOC)) {
-		$cadena=$cadena."<option value=".$ver['Numero'].">".$ver['Numero'].'.- '.$ver['Nombre']."</option>";
+	while ($ver = $result->fetch_array(MYSQLI_ASSOC)) {
+		$cadena=$cadena."<option value=".$ver['ID'].">".$ver['Inmueble'].'.- '.$ver['Nombre']."</option>";
 	}
 
 	echo  $cadena."</select>";
